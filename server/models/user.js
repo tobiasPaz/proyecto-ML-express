@@ -1,7 +1,7 @@
 const mongoose = require("mongoose");
-const schema = mongoose.Schema;
+const Schema = mongoose.Schema;
 
-const userSchema = new schema({
+const usuarioSchema = new Schema({
   nombreusuario: {
     type: String,
     required: true,
@@ -22,12 +22,10 @@ const userSchema = new schema({
     type: String,
     required: true,
   },
-  date: {
-    type: Date,
-    default: Date.now,
-  },
+  publicaciones: [{ type: Schema.Type.objectId, ref: "Publicacion" }],
+  comentarios: [{ type: Schema.Type.objectId, ref: "Comentario" }],
 });
 
-const User = mongoose.model("User", userSchema);
+const Usuario = mongoose.model("Usuario", usuarioSchema);
 
-module.exports = User;
+module.exports = Usuario;

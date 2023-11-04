@@ -1,27 +1,18 @@
 const routerUsuarios = require("express").Router();
+const {
+  verUsuarios,
+  verUsuario,
+  crearUsuario,
+  borrarUsuario,
+  actualizarUsuario,
+} = require("../controllers/users");
 
-routerUsuarios
-  .route("/")
-  .get((req, res) => {
-    verUsuarios;
-  })
-  .post((req, res) => {
-    crearUsuario;
-  })
-  .delete((req, res) => {
-    borrarUsuario;
-  });
+routerUsuarios.route("/").get(verUsuarios).post(crearUsuario);
 
 routerUsuarios
   .route("/:id")
-  .get((req, res) => {
-    verUsuario;
-  })
-  .put((req, res) => {
-    actualizarUsuario;
-  })
-  .delete((req, res) => {
-    borrarUsuario;
-  });
+  .get(verUsuario)
+  .put(actualizarUsuario)
+  .delete(borrarUsuario);
 
 module.exports = routerUsuarios;
