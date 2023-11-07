@@ -22,10 +22,18 @@ const usuarioSchema = new Schema({
     type: String,
     required: true,
   },
-  publicaciones: [{ type: Schema.Type.objectId, ref: "Publicacion" }],
-  comentarios: [{ type: Schema.Type.objectId, ref: "Comentario" }],
+  publicaciones: [{ type: Schema.Types.ObjectId, ref: "Publicacion" }],
+  comentarios: [{ type: Schema.Types.ObjectId, ref: "Comentario" }],
 });
 
 const Usuario = mongoose.model("Usuario", usuarioSchema);
 
 module.exports = Usuario;
+
+// {
+//   "nombreusuario": "nose",
+//   "nombre": "Tobias",
+//   "apellido": "Paz",
+//   "email": "tobiashubelpa@gmail.com",
+//   "clave": "90804b79"
+// }

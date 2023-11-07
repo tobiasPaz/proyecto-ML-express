@@ -11,17 +11,18 @@ const puclicacionSchema = new Schema({
     required: true,
   },
   autor: {
-    type: Schema.types.objectId,
+    type: Schema.Types.ObjectId,
     ref: "Usuario",
   },
   categorias: [
     {
-      type: Schema.types.objectId,
+      type: Schema.Types.ObjectId,
       ref: "Categoria",
     },
   ],
-  comentarios: [{ type: Schema.types.objectId, ref: "Comment" }],
+  comentarios: [{ type: Schema.Types.ObjectId, ref: "Comment" }],
 });
 
 const Publicacion = moongose.model("Publicacion", puclicacionSchema);
 module.exports = Publicacion;
+

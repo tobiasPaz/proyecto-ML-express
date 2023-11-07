@@ -3,7 +3,17 @@ const {
   crearComentario,
   editarComentario,
   borrarComentario,
-} = require("../controllers/comments");
+} = require("../controllers/comentarios");
 
-routerComentarios.route("/").post(crearComentario);
-routerComentarios.route("/:id").put(editarComentario).delete(borrarComentario);
+const catchAsync = require("../utils/catchAsync");
+const { validarComentario } = require("../validations/validaciones");
+
+routerComentarios
+  .route("/")
+  .post(validarComentario, catchAsync(crearComentario));
+routerComentarios
+  .route("/:id")
+  .put(catchAsync(editarComentario))
+  .delete(catchAsync(borrarComentario));
+
+module.exports = routerComentarios;

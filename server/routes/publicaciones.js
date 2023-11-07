@@ -5,12 +5,20 @@ const {
   crearPublicacion,
   borrarPublicacion,
   actualizarPublicacion,
-} = require("../controllers/publicacione");
+} = require("../controllers/publicaciones");
 
-routerPublicaciones.route("/").get(verPublicaciones).post(crearPublicacion);
+const catchAsync = require("../utils/catchAsync");
+const { validarPublicacion } = require("../validations/validaciones");
+
+routerPublicaciones
+  .route("/")
+  .get(catchAsync(verPublicaciones))
+  .post(validarPublicacion, catchAsync(crearPublicacion));
 
 routerPublicaciones
   .route("/:id")
-  .get(verPublicacion)
-  .put(actualizarPublicacion)
-  .delete(borrarPublicacion);
+  .get(catchAsync(verPublicacion))
+  .put(catchAsync(actualizarPublicacion))
+  .delete(catchAsync(borrarPublicacion));
+
+module.exports = routerPublicaciones;

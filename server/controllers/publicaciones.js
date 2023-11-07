@@ -9,7 +9,14 @@ const verPublicaciones = async (req, res) => {
 
 const verPublicacion = async (req, res) => {
   const { id } = req.params;
-  const publicacion = await Publicacion.findById(id);
+  const publicacion = await Publicacion.findById(id)
+    .populate("autor")
+    .populate({
+      path: "comentarios",
+      populate: {
+        path: "autor",
+      },
+    });
   res.json(publicacion);
 };
 
@@ -22,7 +29,7 @@ const crearPublicacion = async (req, res) => {
   });
 
   for (let i = 0; i < categorias.length; i++) {
-    await Categoria.findByIdAndUpdate(publicacion._id, {
+    await Categoria.findByIdAndUpdate(categorias._id, {
       $push: { publicaciones: publicacion._id },
     });
   }

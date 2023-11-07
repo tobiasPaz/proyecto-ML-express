@@ -1,4 +1,5 @@
 const routeCategorias = require("express").Router();
+const { model } = require("mongoose");
 const {
   verCategorias,
   verCategoria,
@@ -6,10 +7,18 @@ const {
   borrarCategoria,
 } = require("../controllers/categorias");
 
-routeCategorias.route("/").get(verCategorias).post(crearCategoria);
+const catchAsync = require("../utils/catchAsync");
+const { validarCategoria } = require("../validations/validaciones");
+
+routeCategorias
+  .route("/")
+  .get(catchAsync(verCategorias))
+  .post(validarCategoria, catchAsync(crearCategoria));
 
 routeCategorias
   .route("/:id")
-  .get(verCategoria)
-  .put(crearCategoria)
-  .delete(borrarCategoria);
+  .get(catchAsync(verCategoria))
+  .put(catchAsync(crearCategoria))
+  .delete(catchAsync(borrarCategoria));
+
+module.exports = routeCategorias;

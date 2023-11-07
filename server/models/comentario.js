@@ -13,6 +13,10 @@ const comentarioSchema = new Schema({
   puntuacion: {
     type: Number,
   },
+  publicacion: {
+    type: Schema.Types.ObjectId,
+    ref: "Publicacion",
+  },
 });
 
 const Comentario = moongose.model("Comentario", comentarioSchema);

@@ -1,42 +1,42 @@
-const Comment = require("../models/comment");
-const Usuario = require("../models/user");
-const Publicacion = require("../models/post");
+const Comentario = require("../models/comentario");
+const Usuario = require("../models/usuario");
+const Publicacion = require("../models/publicacion");
 
 const crearComentario = async (req, res) => {
   const { autor, contenido, puntuacion } = req.body;
-  const comment = new Comment({ autor, contenido, puntuacion });
+  const comentario = new Comentario({ autor, contenido, puntuacion });
   await Publicacion.findByIdAndUpdate(req.params.id, {
-    $push: { comentarios: comment._id },
+    $push: { comentarios: comentario._id },
   });
   await Usuario.findByIdAndUpdate(autor, {
-    $push: { comentarios: comment._id },
+    $push: { comentarios: comentario._id },
   });
 
-  await comment.save();
+  await comentario.save();
 };
 
 const editarComentario = async (req, res) => {
   const { id } = req.params;
   const { contenido, puntuacion } = req.body;
-  const comment = await Comment.findByIdAndUpdate(id, {
+  const comentario = await Comentario.findByIdAndUpdate(id, {
     contenido,
     puntuacion,
   });
-  await comment.save();
+  await comentario.save();
   res.json({ status: "Comentario actualizado" });
 };
 
 const borrarComentario = async (req, res) => {
   const { id } = req.params;
-  const comment = await Comment.findByIdAndDelete(id);
+  const comentario = await Comentario.findByIdAndDelete(id);
   await Publicacion.findByIdAndUpdate(req.params.id, {
-    $pull: { comentarios: comment._id },
+    $pull: { comentarios: comentario._id },
   });
   await Usuario.findByIdAndUpdate(autor, {
-    $pull: { comentarios: comment._id },
+    $pull: { comentarios: comentario._id },
   });
 
-  await comment.save();
+  await comentario.save();
   res.json({ status: "Comentario borrado" });
 };
 

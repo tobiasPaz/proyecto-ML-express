@@ -1,5 +1,6 @@
-const Usuario = require("../models/user");
-const Comentario = require("../models/comment");
+const Usuario = require("../models/usuario");
+const Comentario = require("../models/comentario");
+const Publicacion = require("../models/publicacion");
 
 const verUsuarios = async (req, res) => {
   const usuarios = await Usuario.find();
@@ -8,7 +9,9 @@ const verUsuarios = async (req, res) => {
 
 const verUsuario = async (req, res) => {
   const { id } = req.params;
-  const usuario = await Usuario.findById(id);
+  const usuario = await Usuario.findById(id)
+    .populate("publicaciones")
+    .populate("comentarios");
   res.json(usuario);
 };
 
@@ -28,8 +31,8 @@ const crearUsuario = async (req, res) => {
 const borrarUsuario = async (req, res) => {
   const { id } = req.params;
   await Usuario.findByIdAndDelete(id);
-  const publicaciones = await User.deleteMany({ autor: id }).exec();
-  const comentarios = await Comment.deleteMany({ autor: id }).exec();
+  const publicaciones = await Publicacion.deleteMany({ autor: id }).exec();
+  const comentarios = await Comentario.deleteMany({ autor: id }).exec();
   res.json({ status: "Usuario borrado" });
 };
 
@@ -43,7 +46,7 @@ const actualizarUsuario = async (req, res) => {
     email,
     clave,
   });
-  
+
   res.json({ status: "Usuario actualizado" });
 };
 

@@ -1,5 +1,5 @@
-const Categoria = require("../models/categories");
-const Publicacion = require("../models/post");
+const Categoria = require("../models/categoria");
+const Publicacion = require("../models/publicacion");
 
 const verCategorias = async (req, res) => {
   const categorias = await Categoria.find();
@@ -8,7 +8,8 @@ const verCategorias = async (req, res) => {
 
 const verCategoria = async (req, res) => {
   const { id } = req.params;
-  const categoria = await Categoria.findById(id);
+  const categoria = await Categoria.findById(id)
+    .populate("publicaciones")
   res.json(categoria);
 };
 
@@ -22,7 +23,7 @@ const crearCategoria = async (req, res) => {
 const borrarCategoria = async (req, res) => {
   const { id } = req.params;
   await Categoria.findByIdAndDelete(id);
-  const publicaciones = await Publicacion.findManyAndUpdate(
+  const publicaciones = await Publicacion.updateMany(
     { categoria: id },
     { categoria: null }
   );
@@ -33,7 +34,7 @@ const actualizarCategoria = async (req, res) => {
   const { id } = req.params;
   const { nombre } = req.body;
   const categoria = await Categoria.findByIdandUpdate(id, { nombre });
-  const publicaciones = await Publicacion.findManyAndUpdate(
+  const publicaciones = await Publicacion.updateMany(
     { categoria: id },
     { categoria: nombre }
   );

@@ -2,13 +2,13 @@ const moongose = require("mongoose");
 const Schema = moongose.Schema;
 
 const categoriaSchema = new Schema({
-  name: {
+  nombre: {
     type: String,
     required: true,
   },
   publicaciones: [
     {
-      type: Schema.types.ObjectId,
+      type: Schema.Types.ObjectId,
       ref: "Publicacion",
     },
   ],
@@ -16,3 +16,7 @@ const categoriaSchema = new Schema({
 
 const Categoria = moongose.model("Categoria", categoriaSchema);
 module.exports = Categoria;
+
+// {
+//   "nombre": "movilidad"
+// }
