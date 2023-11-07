@@ -1,6 +1,7 @@
 const Joi = require("joi");
 
 const usuarioSchema = Joi.object({
+  nombreusuario: Joi.string(),
   nombre: Joi.string().required(),
   apellido: Joi.string().required(),
   email: Joi.string().email().required(),

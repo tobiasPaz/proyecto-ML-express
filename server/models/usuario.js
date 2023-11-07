@@ -30,6 +30,9 @@ const Usuario = mongoose.model("Usuario", usuarioSchema);
 
 module.exports = Usuario;
 
+//pruebas para el git
+
+
 // {
 //   "nombreusuario": "nose",
 //   "nombre": "Tobias",
