@@ -11,6 +11,7 @@ const verPublicacion = async (req, res) => {
   const { id } = req.params;
   const publicacion = await Publicacion.findById(id)
     .populate("autor")
+    .populate("categorias")
     .populate({
       path: "comentarios",
       populate: {
@@ -29,7 +30,7 @@ const crearPublicacion = async (req, res) => {
   });
 
   for (let i = 0; i < categorias.length; i++) {
-    await Categoria.findByIdAndUpdate(categorias._id, {
+    await Categoria.findByIdAndUpdate(categorias[i]._id, {
       $push: { publicaciones: publicacion._id },
     });
   }
@@ -37,13 +38,15 @@ const crearPublicacion = async (req, res) => {
   res.json({ status: "Publicacion creada" });
 };
 
+// no se agregan las publicaciones a las categorias al momento de crearlas, reparar
+
 const borrarPublicacion = async (req, res) => {
   const { id } = req.params;
-  const publicacion = await Publicacion.findByIdAndDelete(id);
+  const publicacion = await Publicacion.findByIdAndDelete({ _id: id });
   await Usuario.findByIdAndUpdate(publicacion.autor, {
     $pull: { publicaciones: publicacion._id },
   });
-  await Categoria.updateMany(publicacion.categorias, {
+  await Categoria.updateMany({ _id: { $in: publicacion.categorias } }, {
     $pull: { publicaciones: publicacion._id },
   });
 

@@ -20,9 +20,15 @@ const puclicacionSchema = new Schema({
       ref: "Categoria",
     },
   ],
-  comentarios: [{ type: Schema.Types.ObjectId, ref: "Comment" }],
+  comentarios: [{ type: Schema.Types.ObjectId, ref: "Comentario" }],
 });
 
 const Publicacion = moongose.model("Publicacion", puclicacionSchema);
 module.exports = Publicacion;
 
+// {
+//   "titulo": "",
+//   "contenido": "",
+//   "autor": "",
+//   "categorias": ""
+// }
