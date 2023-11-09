@@ -30,7 +30,7 @@ const crearPublicacion = async (req, res) => {
   });
 
   for (let i = 0; i < categorias.length; i++) {
-    await Categoria.findByIdAndUpdate(categorias[i]._id, {
+    await Categoria.findByIdAndUpdate(categorias[i], {
       $push: { publicaciones: publicacion._id },
     });
   }
@@ -46,9 +46,12 @@ const borrarPublicacion = async (req, res) => {
   await Usuario.findByIdAndUpdate(publicacion.autor, {
     $pull: { publicaciones: publicacion._id },
   });
-  await Categoria.updateMany({ _id: { $in: publicacion.categorias } }, {
-    $pull: { publicaciones: publicacion._id },
-  });
+  await Categoria.updateMany(
+    { _id: { $in: publicacion.categorias } },
+    {
+      $pull: { publicaciones: publicacion._id },
+    }
+  );
 
   res.json({ status: "Publicacion borrada" });
 };

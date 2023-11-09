@@ -1,13 +1,12 @@
 const Joi = require("joi");
 
 const usuarioSchema = Joi.object({
-  nombreusuario: Joi.string(),
   nombre: Joi.string().required(),
   apellido: Joi.string().required(),
   email: Joi.string().email().required(),
-  clave: Joi.string().required(),
   publicaciones: Joi.array(),
   comentarios: Joi.array(),
+  password: Joi.string().required(),
 });
 
 const publicacionSchema = Joi.object({

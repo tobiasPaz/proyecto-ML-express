@@ -7,18 +7,20 @@ const {
   actualizarPublicacion,
 } = require("../controllers/publicaciones");
 
+const { estaLogeado, esAutorPublicacion } = require("../middlewares");
+
 const catchAsync = require("../utils/catchAsync");
 const { validarPublicacion } = require("../validations/validaciones");
 
 routerPublicaciones
   .route("/")
   .get(catchAsync(verPublicaciones))
-  .post(validarPublicacion, catchAsync(crearPublicacion));
+  .post(estaLogeado, validarPublicacion, catchAsync(crearPublicacion));
 
 routerPublicaciones
   .route("/:id")
   .get(catchAsync(verPublicacion))
-  .put(catchAsync(actualizarPublicacion))
-  .delete(catchAsync(borrarPublicacion));
+  .put(estaLogeado, esAutorPublicacion, catchAsync(actualizarPublicacion))
+  .delete(estaLogeado, esAutorPublicacion, catchAsync(borrarPublicacion));
 
 module.exports = routerPublicaciones;

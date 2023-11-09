@@ -1,10 +1,11 @@
 const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
+const passportLocalMongoose = require("passport-local-mongoose");
 
 const usuarioSchema = new Schema({
-  nombreusuario: {
-    type: String,
-    required: true,
+  admin: {
+    type: Boolean,
+    default: false,
   },
   nombre: {
     type: String,
@@ -18,13 +19,11 @@ const usuarioSchema = new Schema({
     type: String,
     required: true,
   },
-  clave: {
-    type: String,
-    required: true,
-  },
   publicaciones: [{ type: Schema.Types.ObjectId, ref: "Publicacion" }],
   comentarios: [{ type: Schema.Types.ObjectId, ref: "Comentario" }],
 });
+
+usuarioSchema.plugin(passportLocalMongoose);
 
 const Usuario = mongoose.model("Usuario", usuarioSchema);
 

@@ -16,16 +16,22 @@ const verUsuario = async (req, res) => {
 };
 
 const crearUsuario = async (req, res) => {
-  const { nombreusuario, nombre, apellido, email, clave } = req.body;
+  const { nombre, apellido, email, password } = req.body;
   const usuario = new Usuario({
-    nombreusuario,
     nombre,
     apellido,
     email,
-    clave,
+    username: email,
   });
-  await usuario.save();
-  res.json({ status: "Usuario creado" });
+  const nuevoUsuario = await Usuario.register(usuario, password);
+
+  req.login(nuevoUsuario, (err) => {
+    if (err) {
+      return next(err);
+    }
+  });
+
+  res.json({ status: "Usuario creado", nuevoUsuario });
 };
 
 const borrarUsuario = async (req, res) => {
@@ -50,10 +56,41 @@ const actualizarUsuario = async (req, res) => {
   res.json({ status: "Usuario actualizado" });
 };
 
+const loginUsuario = async (req, res) => {
+  const { username } = req.body;
+  const usuario = await Usuario.findOne({ username });
+  res.json({ usuario });
+};
+
+const logoutUsuario = async (req, res) => {
+  req.logout((err) => {
+    if (err) {
+      return next(err);
+    }
+  });
+  res.json({ status: "Usuario desconectado" });
+};
+
+const usuarioLogeado = async (req, res) => {
+  if (req.user) {
+    res.json(req.usuario);
+  } else {
+    res.json({ status: "No hay usuario logeado" });
+  }
+};
+
+const errorLogin = async (req, res) => {
+  res.status(401).json({ status: "Error en los datos de login" });
+};
+
 module.exports = {
   verUsuarios,
   verUsuario,
   crearUsuario,
   borrarUsuario,
   actualizarUsuario,
+  loginUsuario,
+  logoutUsuario,
+  errorLogin,
+  usuarioLogeado,
 };
