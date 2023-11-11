@@ -35,13 +35,11 @@ const borrarComentario = async (req, res) => {
   const { id } = req.params;
   const comentario = await Comentario.findByIdAndDelete(id);
   await Publicacion.findByIdAndUpdate(comentario.publicacion, {
-    $pull: { comentarios: comentario._id },
+    $pull: { comentarios: id },
   });
   await Usuario.findByIdAndUpdate(comentario.autor, {
-    $pull: { comentarios: comentario._id },
+    $pull: { comentarios: id },
   });
-
-  await comentario.save();
   res.json({ status: "Comentario borrado" });
 };
 
