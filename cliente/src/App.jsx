@@ -1,26 +1,29 @@
 // import reactLogo from "./assets/react.svg";
-import viteLogo from "/vite.svg";
 import "./App.css";
-import Boton from "./componentes/Boton";
+import viteLogo from "/vite.svg";
 import { useState } from "react";
-import Form from "./componentes/Form";
+
+import Navbar from "./componentes/Navbar";
+import Card from "./componentes/Card";
 
 function App() {
-  const [numero, setNumero] = useState(0);
-
-  function contador() {
-    setNumero(numero + 1);
-  }
-
   return (
     <>
-      <Form></Form>
-      {/* <Boton
-        texto={numero}
-        color="red"
-        colorLetra="white"
-        funcion={contador}
-      ></Boton> */}
+      <Navbar></Navbar>
+      <div class="contenedor">
+        <nav>
+          <h1>Navengacion</h1>
+        </nav>
+        <main>
+          <Card></Card>
+        </main>
+        <aside>
+          <h1>Publicidad</h1>
+        </aside>
+      </div>
+      <footer>
+        <h1>Pie de pagina</h1>
+      </footer>
     </>
   );
 }
