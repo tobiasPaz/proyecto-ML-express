@@ -1,42 +1,50 @@
-#root {
-  max-width: 1280px;
-  margin: 0 auto;
-  padding: 2rem;
+a {
+  color: #fff !important;
+}
+.d-flex {
+  width: 40rem;
+  margin-right: auto !important;
+}
+.bg-body-tertiary {
+  --bs-bg-opacity: 1;
+  background-color: #009879 !important;
+}
+.me-auto {
+  margin-right: 0 !important;
+}
+.dropdown-item {
+  color: #198754 !important;
+}
+.btn {
+  margin: 0px 5px;
+}
+
+/* header,
+main,
+aside,
+footer,
+nav {
+  margin: 0;
+  padding: 5px;
+} */
+/* #root {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+} */
+.contenedor {
+  display: flex;
+  flex-grow: 1;
+}
+/* nav {
+  max-width: 20vw;
+} */
+main {
+  flex-grow: 1;
+}
+aside {
+  max-width: 20vw;
+}
+footer {
   text-align: center;
-}
-
-.logo {
-  height: 6em;
-  padding: 1.5em;
-  will-change: filter;
-  transition: filter 300ms;
-}
-.logo:hover {
-  filter: drop-shadow(0 0 2em #646cffaa);
-}
-.logo.react:hover {
-  filter: drop-shadow(0 0 2em #61dafbaa);
-}
-
-@keyframes logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
-}
-
-@media (prefers-reduced-motion: no-preference) {
-  a:nth-of-type(2) .logo {
-    animation: logo-spin infinite 20s linear;
-  }
-}
-
-.card {
-  padding: 2em;
-}
-
-.read-the-docs {
-  color: #888;
 }
