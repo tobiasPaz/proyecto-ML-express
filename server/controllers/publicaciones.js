@@ -38,8 +38,6 @@ const crearPublicacion = async (req, res) => {
   res.json({ status: "Publicacion creada" });
 };
 
-// no se agregan las publicaciones a las categorias al momento de crearlas, reparar
-
 const borrarPublicacion = async (req, res) => {
   const { id } = req.params;
   const publicacion = await Publicacion.findByIdAndDelete({ _id: id });
