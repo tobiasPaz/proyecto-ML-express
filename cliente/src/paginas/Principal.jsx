@@ -1,5 +1,5 @@
-import Navbar from "./sub-componentes/Navbar";
-import Card from "./sub-componentes/Card";
+
+import Card from "../componentes/Card";
 
 function Principal() {
   return (
