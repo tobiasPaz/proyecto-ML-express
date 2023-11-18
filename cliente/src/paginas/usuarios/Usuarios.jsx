@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 function Usuarios() {
   const [usuarios, setUsuarios] = useState([{}]);
@@ -17,6 +18,11 @@ function Usuarios() {
           <td>{element.nombre}</td>
           <td>{element.apellido}</td>
           <td>{element.email}</td>
+          <td>
+            <button>
+              <Link to={`/usuarios/${element._id}`}>Inf</Link>
+            </button>
+          </td>
         </tr>
       );
     });
@@ -35,6 +41,7 @@ function Usuarios() {
             <th>nombre</th>
             <th>apellido</th>
             <th>email</th>
+            <th>aplicaciones</th>
           </tr>
         </thead>
         <tbody id="tbody">{cargarTabla(usuarios)}</tbody>

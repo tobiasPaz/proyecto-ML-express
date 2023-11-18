@@ -1,4 +1,3 @@
-
 const Usuario = require("../models/usuario");
 const Comentario = require("../models/comentario");
 const Publicacion = require("../models/publicacion");
@@ -74,9 +73,9 @@ const logoutUsuario = async (req, res) => {
 
 const usuarioLogeado = async (req, res) => {
   if (req.user) {
-    res.json(req.user);
+    res.json({ logeado: true, user: req.user });
   } else {
-    res.json({ msg: "No hay usuario logeado" });
+    res.json({ logeado: false });
   }
 };
 

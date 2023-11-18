@@ -6,6 +6,7 @@ import Principal from "./paginas/Principal";
 import Usuarios from "./paginas/usuarios/Usuarios";
 import Registro from "./paginas/usuarios/Registro";
 import Login from "./paginas/usuarios/Login";
+import Usuario from "./paginas/usuarios/Usuario";
 
 import Navbar from "./componentes/Navbar";
 
@@ -16,10 +17,11 @@ function App() {
     <>
       <Navbar></Navbar>
       <Routes>
-        <Route path="/inicio" element={<Principal />} />
+        <Route path="/" element={<Principal />} />
         <Route path="/usuarios" element={<Usuarios></Usuarios>} />
         <Route path="/registrarse" element={<Registro></Registro>} />
-        <Route path="/Login" element={<Login></Login>} />
+        <Route path="/login" element={<Login></Login>} />
+        <Route path="/usuarios/:id" element={<Usuario></Usuario>} />
       </Routes>
     </>
   );
