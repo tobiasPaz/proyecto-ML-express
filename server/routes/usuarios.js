@@ -15,7 +15,10 @@ const {
 const { estaLogeado, esAdmin, esUsuario } = require("../middlewares");
 
 const catchAsync = require("../utils/catchAsync");
-const { validarUsuario } = require("../validations/validaciones");
+const {
+  validarUsuario,
+  validarEdtUsuario,
+} = require("../validations/validaciones");
 
 routerUsuarios
   .route("/")
@@ -34,7 +37,7 @@ routerUsuarios.post("/error-login", catchAsync(errorLogin));
 routerUsuarios
   .route("/:id")
   .get(catchAsync(verUsuario))
-  .put(estaLogeado, esUsuario, catchAsync(actualizarUsuario))
+  .put(estaLogeado, esUsuario, validarEdtUsuario, catchAsync(actualizarUsuario))
   .delete(estaLogeado, esAdmin, catchAsync(borrarUsuario));
 
 module.exports = routerUsuarios;

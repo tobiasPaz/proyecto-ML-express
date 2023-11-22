@@ -7,6 +7,7 @@ function Login() {
     email: "",
     password: "",
   });
+  const [logeado, setLogeado] = useState(false);
   function handleChange(e) {
     setUsuario({
       ...usuario,
@@ -14,8 +15,8 @@ function Login() {
     });
   }
 
-  function handleSubmit() {
-    fetch("http://localhost:4000/usuarios/login", {
+  async function handleSubmit() {
+    await fetch("http://localhost:4000/usuarios/login", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -26,7 +27,12 @@ function Login() {
         password: usuario.password,
       }),
     });
-    console.log("sesion iniciada", usuario);
+
+    const data = await fetch("http://localhost:4000/usuarios/usuario-logeado", {
+      credentials: "include",
+    });
+    const log = await data.json();
+    setLogeado({ logeado: log.logeado });
   }
 
   return (
@@ -56,7 +62,9 @@ function Login() {
         <button
           onClick={() => {
             handleSubmit();
-            navigate("/");
+            if (logeado) {
+              navigate("/");
+            }
           }}
         >
           Enviar

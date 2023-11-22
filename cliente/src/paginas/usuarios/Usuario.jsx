@@ -1,7 +1,17 @@
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
 
 function Usuario() {
+  const navigate = useNavigate();
+
+  async function logeado() {
+    const data = await fetch("http://localhost:4000/usuarios/usuario-logeado", {
+      credentials: "include",
+    });
+    const usuario = await data.json();
+    console.log("usuario", usuario);
+  }
+
   const { id } = useParams();
   const [usuario, setUsuario] = useState({});
   async function cargarUsuario() {
@@ -11,6 +21,7 @@ function Usuario() {
   }
   useEffect(() => {
     cargarUsuario();
+    logeado();
   }, []);
   return (
     <>
@@ -18,6 +29,20 @@ function Usuario() {
       <h2>nombre: {usuario.nombre}</h2>
       <h2>apellido: {usuario.apellido}</h2>
       <h2>email: {usuario.email}</h2>
+      <button onClick={() => navigate("/usuarios/editar/" + id + "")}>
+        editar usuario
+      </button>
+      <button
+        onClick={async () => {
+          await fetch(`http://localhost:4000/usuarios/${id}`, {
+            method: "DELETE",
+            credentials: "include",
+          });
+          navigate("/usuarios");
+        }}
+      >
+        eliminar
+      </button>
     </>
   );
 }

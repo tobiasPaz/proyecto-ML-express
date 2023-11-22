@@ -3,6 +3,7 @@ const {
   publicacionSchema,
   comentarioSchema,
   categoriasSchema,
+  edtUsuarioSchema,
 } = require("./schemas");
 
 // const validar = (schema) => (req, res, next) => {
@@ -17,6 +18,14 @@ const {
 
 const validarUsuario = (req, res, next) => {
   const { error } = usuarioSchema.validate(req.body);
+  if (error) {
+    return res.status(400).json({ error: error.details[0].message });
+  }
+  next();
+};
+
+const validarEdtUsuario = (req, res, next) => {
+  const { error } = edtUsuarioSchema.validate(req.body);
   if (error) {
     return res.status(400).json({ error: error.details[0].message });
   }
@@ -58,4 +67,5 @@ module.exports = {
   validarPublicacion,
   validarComentario,
   validarCategoria,
+  validarEdtUsuario,
 };

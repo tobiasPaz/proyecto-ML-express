@@ -44,13 +44,12 @@ const borrarUsuario = async (req, res) => {
 
 const actualizarUsuario = async (req, res) => {
   const { id } = req.params;
-  const { nombreusuario, nombre, apellido, email, clave } = req.body;
-  const usuario = await Usuario.findByIdandUpdate(id, {
-    nombreusuario,
+  const { nombre, apellido, email } = req.body;
+  const usuario = await Usuario.findByIdAndUpdate(id, {
+    nombreusuario: email,
     nombre,
     apellido,
     email,
-    clave,
   });
 
   res.json({ status: "Usuario actualizado" });

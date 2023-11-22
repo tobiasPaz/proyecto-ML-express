@@ -7,6 +7,7 @@ import Usuarios from "./paginas/usuarios/Usuarios";
 import Registro from "./paginas/usuarios/Registro";
 import Login from "./paginas/usuarios/Login";
 import Usuario from "./paginas/usuarios/Usuario";
+import EditarUsuario from "./paginas/usuarios/EditarUsuario";
 
 import Navbar from "./componentes/Navbar";
 
@@ -22,6 +23,10 @@ function App() {
         <Route path="/registrarse" element={<Registro></Registro>} />
         <Route path="/login" element={<Login></Login>} />
         <Route path="/usuarios/:id" element={<Usuario></Usuario>} />
+        <Route
+          path="/usuarios/editar/:id"
+          element={<EditarUsuario></EditarUsuario>}
+        />
       </Routes>
     </>
   );

@@ -6,7 +6,16 @@ const usuarioSchema = Joi.object({
   email: Joi.string().email().required(),
   publicaciones: Joi.array(),
   comentarios: Joi.array(),
-  password: Joi.string().required(),
+  password: Joi.string(),
+});
+
+const edtUsuarioSchema = Joi.object({
+  nombre: Joi.string().required(),
+  apellido: Joi.string().required(),
+  email: Joi.string().email().required(),
+  publicaciones: Joi.array(),
+  comentarios: Joi.array(),
+  password: Joi.string(),
 });
 
 const publicacionSchema = Joi.object({
@@ -34,4 +43,5 @@ module.exports = {
   publicacionSchema,
   comentarioSchema,
   categoriasSchema,
+  edtUsuarioSchema,
 };
