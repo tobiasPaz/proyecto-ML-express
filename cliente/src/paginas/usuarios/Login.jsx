@@ -1,13 +1,12 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
-function Login() {
+function Login({ setLogeado, logeado }) {
   const navigate = useNavigate();
   const [usuario, setUsuario] = useState({
     email: "",
     password: "",
   });
-  const [logeado, setLogeado] = useState(false);
   function handleChange(e) {
     setUsuario({
       ...usuario,
@@ -28,11 +27,18 @@ function Login() {
       }),
     });
 
-    const data = await fetch("http://localhost:4000/usuarios/usuario-logeado", {
+    await fetch("http://localhost:4000/usuarios/usuario-logeado", {
       credentials: "include",
-    });
-    const log = await data.json();
-    setLogeado({ logeado: log.logeado });
+    })
+      .then((res) => {
+        return res.json();
+      })
+      .then((data) => {
+        setLogeado(data);
+        if (data.logeado) {
+          navigate("/");
+        }
+      });
   }
 
   return (
@@ -62,9 +68,6 @@ function Login() {
         <button
           onClick={() => {
             handleSubmit();
-            if (logeado) {
-              navigate("/");
-            }
           }}
         >
           Enviar

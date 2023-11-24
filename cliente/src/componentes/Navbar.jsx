@@ -1,12 +1,55 @@
 import { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 
-function Navbar() {
+function Navbar({ logeado, setLogeado }) {
   const navigate = useNavigate();
   const [usuario, setUsuario] = useState({});
+  const linksLogeado = () => {
+    return (
+      <div>
+        <button
+          onClick={async () => {
+            await fetch("http://localhost:4000/usuarios/logout", {
+              credentials: "include",
+            });
+
+            await fetch("http://localhost:4000/usuarios/usuario-logeado", {
+              credentials: "include",
+            })
+              .then((res) => {
+                return res.json();
+              })
+              .then((data) => {
+                setLogeado(data);
+              });
+          }}
+          className="btn btn-primary"
+        >
+          Cerrar Sesion
+        </button>
+      </div>
+    );
+  };
+
+  const linksDeslogeado = () => {
+    return (
+      <div>
+        <button
+          onClick={() => navigate("/registrarse")}
+          className="btn btn-primary"
+        >
+          Registrarse
+        </button>
+        <button onClick={() => navigate("/login")} className="btn btn-primary">
+          Iniciar Sesion
+        </button>
+      </div>
+    );
+  };
 
   return (
     <nav className="navbar navbar-expand-lg bg-body-tertiary">
+      {console.log(logeado)}
       <div className="container-fluid">
         <Link className="navbar-brand" to="">
           Navbar
@@ -35,35 +78,12 @@ function Navbar() {
               </Link>
             </li>
             <li className="nav-item">
-              <Link className="nav-link disabled" aria-disabled="true">
-                Disabled
+              <Link className="nav-link" to="Categorias">
+                Categorias
               </Link>
             </li>
           </ul>
-          <div>
-            <button
-              onClick={() => navigate("/registrarse")}
-              className="btn btn-primary"
-            >
-              Registrarse
-            </button>
-            <button
-              onClick={() => navigate("/login")}
-              className="btn btn-primary"
-            >
-              Iniciar Sesion
-            </button>
-            <button
-              onClick={() => {
-                fetch("http://localhost:4000/usuarios/logout", {
-                  credentials: "include",
-                });
-              }}
-              className="btn btn-primary"
-            >
-              Cerrar Sesion
-            </button>
-          </div>
+          <ul>{logeado.logeado ? linksLogeado() : linksDeslogeado()}</ul>
         </div>
       </div>
     </nav>

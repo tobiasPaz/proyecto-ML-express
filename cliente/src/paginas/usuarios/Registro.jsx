@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
-function Registro() {
+function Registro({ setLogeado}) {
   const navigate = useNavigate();
   const [usuario, setUsuario] = useState({
     nombre: "",
@@ -16,8 +16,8 @@ function Registro() {
       [e.target.name]: e.target.value,
     });
   }
-  function handleSubmit() {
-    fetch("http://localhost:4000/usuarios", {
+  async function handleSubmit() {
+    await fetch("http://localhost:4000/usuarios", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -30,6 +30,19 @@ function Registro() {
         password: usuario.password,
       }),
     });
+
+    await fetch("http://localhost:4000/usuarios/usuario-logeado", {
+      credentials: "include",
+    })
+      .then((res) => {
+        return res.json();
+      })
+      .then((data) => {
+        setLogeado(data);
+        if (data.logeado) {
+          navigate("/");
+        }
+      });
     console.log("enviado", usuario);
   }
 
@@ -80,7 +93,6 @@ function Registro() {
         <button
           onClick={() => {
             handleSubmit();
-            navigate("/");
           }}
         >
           Enviar

@@ -29,9 +29,8 @@ const crearUsuario = async (req, res) => {
     if (err) {
       return next(err);
     }
+    res.json({ status: "Usuario creado", nuevoUsuario });
   });
-
-  res.json({ status: "Usuario creado", nuevoUsuario });
 };
 
 const borrarUsuario = async (req, res) => {
@@ -58,7 +57,7 @@ const actualizarUsuario = async (req, res) => {
 const loginUsuario = async (req, res) => {
   const { username } = req.body;
   const usuario = await Usuario.findOne({ username });
-  res.json({ usuario });
+  res.json({ logeado: true, usuario: usuario });
 };
 
 const logoutUsuario = async (req, res) => {
@@ -72,7 +71,7 @@ const logoutUsuario = async (req, res) => {
 
 const usuarioLogeado = async (req, res) => {
   if (req.user) {
-    res.json({ logeado: true, user: req.user });
+    res.json({ logeado: true, usuario: req.user });
   } else {
     res.json({ logeado: false });
   }
