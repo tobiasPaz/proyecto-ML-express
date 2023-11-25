@@ -82,6 +82,12 @@ function Navbar({ logeado, setLogeado }) {
                 Categorias
               </Link>
             </li>
+
+            <li className="nav-item">
+              <Link className="nav-link" to="Publicaciones">
+                Publicaciones
+              </Link>
+            </li>
           </ul>
           <ul>{logeado.logeado ? linksLogeado() : linksDeslogeado()}</ul>
         </div>

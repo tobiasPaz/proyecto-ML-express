@@ -1,4 +1,3 @@
-
 import Card from "../componentes/Card";
 
 function Principal() {
@@ -9,7 +8,7 @@ function Principal() {
           <h1>Navengacion</h1>
         </nav>
         <main>
-          <Card></Card>
+          <h1>inicio</h1>
         </main>
         <aside>
           <h1>Publicidad</h1>

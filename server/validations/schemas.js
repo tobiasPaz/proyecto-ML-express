@@ -22,7 +22,7 @@ const publicacionSchema = Joi.object({
   titulo: Joi.string().required(),
   contenido: Joi.string().required(),
   autor: Joi.string().required(),
-  categorias: Joi.array(),
+  categoria: Joi.string().required(),
   comentarios: Joi.array(),
 });
 

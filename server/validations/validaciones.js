@@ -37,7 +37,7 @@ const validarPublicacion = (req, res, next) => {
   if (error) {
     const { details } = error;
     const message = details.map((i) => i.message).join(",");
-    return res.status(422).json({ error: error.details[0].message });
+    return res.status(411).json({ error: error.details[0].message });
   }
   next();
 };

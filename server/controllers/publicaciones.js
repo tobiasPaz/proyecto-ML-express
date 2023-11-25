@@ -22,18 +22,16 @@ const verPublicacion = async (req, res) => {
 };
 
 const crearPublicacion = async (req, res) => {
-  const { titulo, contenido, autor, categorias } = req.body;
-  const publicacion = new Publicacion({ titulo, contenido, autor, categorias });
+  const { titulo, contenido, autor, categoria } = req.body;
+  const publicacion = new Publicacion({ titulo, contenido, autor, categoria });
   await publicacion.save();
   await Usuario.findByIdAndUpdate(autor, {
     $push: { publicaciones: publicacion._id },
   });
 
-  for (let i = 0; i < categorias.length; i++) {
-    await Categoria.findByIdAndUpdate(categorias[i], {
-      $push: { publicaciones: publicacion._id },
-    });
-  }
+  await Categoria.findByIdAndUpdate(categoria, {
+    $push: { publicaciones: publicacion._id },
+  });
 
   res.json({ status: "Publicacion creada" });
 };
