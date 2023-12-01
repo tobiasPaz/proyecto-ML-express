@@ -3,6 +3,7 @@ function Card({ titulo, contenido, autor, categorias }) {
     <div className="card" style={{ width: "18rem" }}>
       <div className="card-header">
         <h5 className="card-title">{titulo}</h5>
+        <h6 className="card-subtitle mb-2 text-muted">{autor}</h6>
       </div>
       <img
         src="https://cdn-icons-png.flaticon.com/512/3135/3135715.png"
@@ -10,7 +11,6 @@ function Card({ titulo, contenido, autor, categorias }) {
         alt="..."
       />
       <div className="card-body">
-        <h6 className="card-subtitle mb-2 text-muted">{autor}</h6>
         <p className="card-text">{contenido}</p>
       </div>
     </div>

@@ -1,7 +1,9 @@
 import { useState, useEffect } from "react";
 import Card from "../../componentes/Card";
+import { useNavigate } from "react-router-dom";
 
 function Publicaciones() {
+  const navigate = useNavigate();
   const [publicaciones, setPublicaciones] = useState([]);
 
   async function cargarPublicaciones() {
@@ -13,13 +15,19 @@ function Publicaciones() {
   function cargarCards() {
     const lista = publicaciones.map((element) => {
       return (
-        <Card
+        <label
+          onClick={() => navigate(`/publicaciones/${element._id}`)}
+          htmlFor={element._id}
           key={`${element._id}`}
-          titulo={element.titulo}
-          contenido={element.contenido}
-          autor={element.autor}
-          categorias={element.categorias}
-        ></Card>
+        >
+          <Card
+            id={element._id}
+            titulo={element.titulo}
+            contenido={element.contenido}
+            autor={element.autor._id}
+            categorias={element.categorias}
+          ></Card>
+        </label>
       );
     });
     return lista;
@@ -32,7 +40,10 @@ function Publicaciones() {
   return (
     <div>
       <h1>Publicaciones</h1>
-      <div>{cargarCards(publicaciones)}</div>
+      <div>{cargarCards()}</div>
+      <button onClick={() => navigate("/publicaciones/crear")}>
+        Crear publicacion
+      </button>
     </div>
   );
 }

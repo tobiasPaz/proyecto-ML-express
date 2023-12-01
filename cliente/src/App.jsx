@@ -15,8 +15,9 @@ import CrearCategoria from "./paginas/categorias/CrearCategoria";
 import EditarCategoria from "./paginas/categorias/EditarCategoria";
 
 import Publicaciones from "./paginas/publicaciones/Publicaciones";
-// import Publicacion from "./paginas/publicaciones/Publicacion";
+import Publicacion from "./paginas/publicaciones/Publicacion";
 import CrearPublicacion from "./paginas/publicaciones/CrearPublicacion";
+import EditarPublicacion from "./paginas/publicaciones/EditarPublicacion";
 
 import useAuth from "./componentes/UseAuth";
 
@@ -55,10 +56,17 @@ function App() {
         <Route path="/categorias/editar/:id" element={<EditarCategoria />} />
 
         <Route path="/publicaciones" element={<Publicaciones />} />
-        {/* <Route path="/publicaciones/:id" element={<Publicacion />} /> */}
+        <Route
+          path="/publicaciones/:id"
+          element={<Publicacion logeado={logeado} />}
+        />
         <Route
           path="/publicaciones/crear"
           element={<CrearPublicacion logeado={logeado} />}
+        />
+        <Route
+          path="/publicaciones/editar/:id"
+          element={<EditarPublicacion />}
         />
       </Routes>
     </>

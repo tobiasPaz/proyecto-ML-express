@@ -35,9 +35,9 @@ function CrearPublicacion({ logeado }) {
 
   function handleSubmit(e) {
     console.log({
-        ...publicacion,
-        autor: usuario,
-      });
+      ...publicacion,
+      autor: usuario,
+    });
     console.log(publicacion);
     fetch("http://localhost:4000/publicaciones", {
       method: "POST",
@@ -85,7 +85,11 @@ function CrearPublicacion({ logeado }) {
           />
         </label>
         <br />
-        <select value="" onChange={handleChange} name="categoria">
+        <select
+          value={publicacion.categoria}
+          onChange={handleChange}
+          name="categoria"
+        >
           <option>categorias</option>
           {optionCategorias(categorias)}
         </select>

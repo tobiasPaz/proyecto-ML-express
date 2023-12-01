@@ -11,7 +11,7 @@ const verPublicacion = async (req, res) => {
   const { id } = req.params;
   const publicacion = await Publicacion.findById(id)
     .populate("autor")
-    .populate("categorias")
+    .populate("categoria")
     .populate({
       path: "comentarios",
       populate: {
@@ -43,7 +43,7 @@ const borrarPublicacion = async (req, res) => {
     $pull: { publicaciones: publicacion._id },
   });
   await Categoria.updateMany(
-    { _id: { $in: publicacion.categorias } },
+    { _id: { $in: publicacion.categoria } },
     {
       $pull: { publicaciones: publicacion._id },
     }
@@ -54,15 +54,15 @@ const borrarPublicacion = async (req, res) => {
 
 const actualizarPublicacion = async (req, res) => {
   const { id } = req.params;
-  const { titulo, contenido, autor, categorias } = req.body;
+  const { titulo, contenido, autor, categoria } = req.body;
   const publicacion = await Publicacion.findByIdAndUpdate(id, {
     titulo,
     contenido,
     autor,
-    categorias,
+    categoria,
   });
 
-  for (let i = 0; i < categorias.length; i++) {
+  for (let i = 0; i < categoria.length; i++) {
     await Categoria.findByIdAndUpdate(publicacion._id, {
       $push: { publicaciones: publicacion._id },
     });

@@ -49,7 +49,6 @@ function Navbar({ logeado, setLogeado }) {
 
   return (
     <nav className="navbar navbar-expand-lg bg-body-tertiary">
-      {console.log(logeado)}
       <div className="container-fluid">
         <Link className="navbar-brand" to="">
           Navbar
