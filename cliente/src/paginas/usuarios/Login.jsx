@@ -1,8 +1,9 @@
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 
 function Login({ setLogeado, logeado }) {
   const navigate = useNavigate();
+  const { state } = useLocation();
   const [usuario, setUsuario] = useState({
     email: "",
     password: "",
@@ -44,6 +45,11 @@ function Login({ setLogeado, logeado }) {
   return (
     <div>
       <h1>Iniciar Sesion</h1>
+      {state ? (
+        <h2 style={{ color: "white", backgroundColor: "red" }}>
+          {state.alert}
+        </h2>
+      ) : null}
       <div>
         <label htmlFor="email">
           Email

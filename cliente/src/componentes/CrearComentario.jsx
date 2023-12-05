@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 
-function CrearComentario({ logeado, id }) {
+function CrearComentario({ logeado, id, loadPublicacion }) {
   const usuario = logeado.usuario._id;
   const [comentario, setComentario] = useState({
     contenido: "",
@@ -27,8 +27,11 @@ function CrearComentario({ logeado, id }) {
       }),
     }).then((res) => {
       if (res.ok) {
-        console.log(comentario);
-        navigate("/publicaciones/" + id);
+        setComentario({
+          contenido: "",
+          puntuacion: 5,
+        });
+        loadPublicacion();
       }
     });
   }

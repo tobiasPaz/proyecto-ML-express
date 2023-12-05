@@ -24,25 +24,40 @@ function Publicacion({ logeado }) {
   function cargarComentarios(e) {
     let list = e.map((comentario) => {
       return (
-        <div key={comentario._id}>
+        <div key={`${comentario._id}`}>
           <h5>autor: {comentario.autor._id}</h5>
           <p>{comentario.contenido}</p>
           <p>puntuacion: {comentario.puntuacion}</p>
-          {logeado.usuario._id == comentario.autor._id ? (
-            <button
-              onClick={() => {
-                fetch(`http://localhost:4000/comentarios/${comentario._id}`, {
-                  method: "DELETE",
-                  credentials: "include",
-                }).then((res) => {
-                  if (res.ok) {
-                    loadPublicacion();
-                  }
-                });
-              }}
-            >
-              borrar
-            </button>
+
+          {logeado.logeado ? (
+            logeado.usuario._id == comentario.autor._id ? (
+              <div>
+                <button
+                  onClick={() => {
+                    fetch(
+                      `http://localhost:4000/comentarios/${comentario._id}`,
+                      {
+                        method: "DELETE",
+                        credentials: "include",
+                      }
+                    ).then((res) => {
+                      if (res.ok) {
+                        loadPublicacion();
+                      }
+                    });
+                  }}
+                >
+                  borrar
+                </button>
+                <button
+                  onClick={() => {
+                    alert("todavia no se puede editar");
+                  }}
+                >
+                  editar
+                </button>
+              </div>
+            ) : null
           ) : null}
         </div>
       );
@@ -59,8 +74,6 @@ function Publicacion({ logeado }) {
       <h1>Publicacion</h1>
       <h2>titulo: {publicacion.titulo}</h2>
       <h4>autor: {publicacion.autor._id}</h4>
-      <h3>contenido: {publicacion.contenido}</h3>
-      <h4>comentarios: {cargarComentarios(publicacion.comentarios)}</h4>
       <h4>categoria: {publicacion.categoria.nombre}</h4>
       <button
         onClick={() => {
@@ -80,7 +93,15 @@ function Publicacion({ logeado }) {
         modificar publicacion
       </button>
       <br />
-      {logeado.logeado ? <CrearComentario logeado={logeado} id={id} /> : null}
+      <h3>contenido: {publicacion.contenido}</h3>
+      {logeado.logeado ? (
+        <CrearComentario
+          logeado={logeado}
+          id={id}
+          loadPublicacion={loadPublicacion}
+        />
+      ) : null}
+      <h4>comentarios: {cargarComentarios(publicacion.comentarios)}</h4>
     </div>
   );
 }

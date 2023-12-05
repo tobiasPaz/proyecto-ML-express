@@ -3,7 +3,6 @@ import { useNavigate } from "react-router-dom";
 
 function CrearPublicacion({ logeado }) {
   const navigate = useNavigate();
-  const usuario = logeado.usuario._id;
   const [categorias, setCategorias] = useState([]);
   const [publicacion, setPublicacion] = useState({
     titulo: "",
@@ -36,7 +35,7 @@ function CrearPublicacion({ logeado }) {
   function handleSubmit(e) {
     console.log({
       ...publicacion,
-      autor: usuario,
+      autor: logeado.usuario._id,
     });
     console.log(publicacion);
     fetch("http://localhost:4000/publicaciones", {
@@ -47,7 +46,7 @@ function CrearPublicacion({ logeado }) {
       credentials: "include",
       body: JSON.stringify({
         ...publicacion,
-        autor: usuario,
+        autor: logeado.usuario._id,
       }),
     }).then((res) => {
       if (res.ok) {

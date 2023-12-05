@@ -23,7 +23,31 @@ import useAuth from "./componentes/UseAuth";
 
 import Navbar from "./componentes/Navbar";
 
-import { Routes, Route } from "react-router-dom";
+import { Routes, Route, Navigate } from "react-router-dom";
+
+function RutaProtegidaLogeado({ children }) {
+  const { logeado, cargando } = useAuth();
+  if (cargando) {
+    return <div>Cargando...</div>;
+  }
+  return logeado.logeado ? (
+    children
+  ) : (
+    <Navigate to="/login" state={{ alert: "no estas logeado" }} />
+  );
+}
+
+function RutaProtegidaAdmin({ children }) {
+  const { logeado, cargando } = useAuth();
+  if (cargando) {
+    return <div>Cargando...</div>;
+  }
+  return logeado.logeado && logeado.usuario.admin ? (
+    children
+  ) : (
+    <Navigate to="/" state={{ alert: "no tienes permisos para eso" }} />
+  );
+}
 
 function App() {
   const { logeado, setLogeado } = useAuth();
@@ -52,7 +76,14 @@ function App() {
 
         <Route path="/categorias" element={<Categorias />} />
         <Route path="/categorias/:id" element={<Categoria />} />
-        <Route path="/categorias/crear" element={<CrearCategoria />} />
+        <Route
+          path="/categorias/crear"
+          element={
+            <RutaProtegidaAdmin>
+              <CrearCategoria />
+            </RutaProtegidaAdmin>
+          }
+        />
         <Route path="/categorias/editar/:id" element={<EditarCategoria />} />
 
         <Route path="/publicaciones" element={<Publicaciones />} />
@@ -62,7 +93,11 @@ function App() {
         />
         <Route
           path="/publicaciones/crear"
-          element={<CrearPublicacion logeado={logeado} />}
+          element={
+            <RutaProtegidaLogeado>
+              <CrearPublicacion logeado={logeado} />
+            </RutaProtegidaLogeado>
+          }
         />
         <Route
           path="/publicaciones/editar/:id"
