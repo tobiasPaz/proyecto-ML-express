@@ -45,6 +45,8 @@ function CrearComentario({ logeado, id, loadPublicacion }) {
           cols="70"
           rows="5"
           onChange={handleChange}
+          value={comentario.contenido}
+          id="comentario"
         ></textarea>
         <br />
         <label htmlFor="puntuacion">

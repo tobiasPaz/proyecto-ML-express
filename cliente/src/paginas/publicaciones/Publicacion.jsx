@@ -8,9 +8,12 @@ function Publicacion({ logeado }) {
   const navigate = useNavigate();
   const [publicacion, setPublicacion] = useState({
     autor: {},
-    comentarios: [{ autor: {} }],
+    comentarios: [{ autor: {}, contenido: "", puntuacion: 5, editando: false }],
     categoria: {},
   });
+
+  const [comText, setComText] = useState();
+  const [comPunt, setComPunt] = useState();
 
   function loadPublicacion() {
     fetch(`http://localhost:4000/publicaciones/${id}`)
@@ -21,12 +24,42 @@ function Publicacion({ logeado }) {
       });
   }
 
+  function eliminarComentario(id) {
+    fetch(`http://localhost:4000/comentarios/${id}`, {
+      method: "DELETE",
+      credentials: "include",
+    }).then((res) => {
+      if (res.ok) {
+        loadPublicacion();
+      }
+    });
+  }
+
+  function handleChangeText(e) {
+    setComText(e.target.value);
+  }
+
+  function handleChangePunt(e) {
+    setComPunt(e.target.value);
+  }
+
   function cargarComentarios(e) {
     let list = e.map((comentario) => {
       return (
         <div key={`${comentario._id}`}>
           <h5>autor: {comentario.autor._id}</h5>
-          <p>{comentario.contenido}</p>
+          {comentario.editando ? (
+            <>
+              <input value={comText} onChange={handleChangeText} />
+              <input
+                value={comPunt}
+                onChange={handleChangePunt}
+                type="number"
+              />
+            </>
+          ) : (
+            <p>{comentario.contenido}</p>
+          )}
           <p>puntuacion: {comentario.puntuacion}</p>
 
           {logeado.logeado ? (
@@ -34,28 +67,36 @@ function Publicacion({ logeado }) {
               <div>
                 <button
                   onClick={() => {
-                    fetch(
-                      `http://localhost:4000/comentarios/${comentario._id}`,
-                      {
-                        method: "DELETE",
-                        credentials: "include",
-                      }
-                    ).then((res) => {
-                      if (res.ok) {
-                        loadPublicacion();
-                      }
-                    });
+                    eliminarComentario(comentario._id);
                   }}
                 >
                   borrar
                 </button>
-                <button
-                  onClick={() => {
-                    alert("todavia no se puede editar");
-                  }}
-                >
-                  editar
-                </button>
+
+                {!comentario.editando ? (
+                  <button
+                    onClick={(e) => {
+                      setPublicacion({
+                        ...publicacion,
+                        comentarios: publicacion.comentarios.map((c) => {
+                          if (c._id == comentario._id) {
+                            setComText(c.contenido);
+                            setComPunt(c.puntuacion);
+                            return {
+                              ...c,
+                              editando: !c.editando,
+                            };
+                          }
+                          return c;
+                        }),
+                      });
+                    }}
+                  >
+                    editar
+                  </button>
+                ) : (
+                  <button onClick={(e) => {}}>enviar</button>
+                )}
               </div>
             ) : null
           ) : null}
